@@ -1,33 +1,36 @@
+
 # Statistical Anomaly Detection System
 
 ![Multivariate Anomaly Detection](images/multivariate_anomaly_visualization.png)
 
+---
+
 ## Executive Summary
 
-The Statistical Anomaly Detection System is a computational statistics project designed to identify unusual environmental pollution patterns using robust statistical methods and multivariate anomaly detection techniques.
+The Statistical Anomaly Detection System is a computational statistics project designed to identify unusual environmental pollution patterns using robust statistical methods and multivariate machine learning techniques.
 
-Using a large-scale air quality monitoring dataset from India containing over 260,000 observations, the project applies exploratory data analysis, robust statistical modeling, and machine learning-based anomaly detection to identify abnormal pollution events that may warrant further investigation.
+Using a large-scale Air Quality dataset from India containing over 260,000 observations, the project integrates exploratory data analysis, robust statistical modeling, and Isolation Forest–based anomaly detection to identify abnormal pollution events that may warrant further investigation.
 
-The framework demonstrates how computational statistics, robust statistical methods, and statistical learning techniques can support environmental monitoring, risk assessment, and evidence-based decision-making in complex, high-dimensional settings.
+This framework demonstrates how computational statistics, robust inference methods, and statistical learning techniques can support environmental monitoring, risk assessment, and data-driven decision-making in high-dimensional environmental systems.
 
 ---
 
 ## Research Question
 
-**Can robust statistical techniques and multivariate anomaly detection methods effectively identify unusual pollution events within large-scale environmental monitoring data?**
+Can robust statistical methods and multivariate machine learning models identify anomalous pollution patterns in large-scale environmental monitoring data?
 
 ---
 
 ## Dataset
 
-This project utilizes the Air Quality Data in India dataset, containing environmental monitoring records collected across multiple locations and time periods.
+The project uses the **Air Quality Data in India** dataset containing environmental monitoring records across multiple states, locations, and time periods.
 
 ### Dataset Characteristics
 
 * 260,621 observations
-* Multiple air quality monitoring stations
-* Environmental pollutant measurements
-* Longitudinal monitoring records
+* Multi-location air quality monitoring stations
+* Longitudinal environmental measurements
+* Pollutant concentration variables
 
 ### Key Variables
 
@@ -38,20 +41,18 @@ This project utilizes the Air Quality Data in India dataset, containing environm
 | RSPM     | Respirable Suspended Particulate Matter |
 | SPM      | Suspended Particulate Matter            |
 
-### Data Preparation
-
-The dataset contained missing observations across several variables. Median imputation was applied to preserve robustness against extreme values while maintaining data integrity for downstream statistical analyses.
+> **Note:** PM2.5 was excluded due to extremely high missingness and insufficient coverage for reliable statistical inference.
 
 ---
 
 ## Project Objectives
 
 * Analyze large-scale environmental pollution data
-* Investigate pollutant distributions and relationships
+* Examine pollutant distributions and relationships
 * Detect extreme observations using robust statistical methods
 * Identify multivariate anomalies using machine learning
-* Develop an environmental risk categorization framework
-* Generate actionable alerts for environmental monitoring
+* Develop environmental risk categorization framework
+* Generate interpretable anomaly-based alerts
 
 ---
 
@@ -59,33 +60,49 @@ The dataset contained missing observations across several variables. Median impu
 
 ### Phase 1 — Data Collection and Preprocessing
 
+* Dataset loading and inspection
 * Missing value assessment
-* Data quality evaluation
-* Median imputation
-* Variable selection and cleaning
+* Median imputation for selected pollutants
+* Exclusion of high-missingness variables (PM2.5)
 
-### Phase 2 — Exploratory Statistical Analysis
+---
 
-* Distribution analysis
-* Correlation analysis
-* Outlier investigation
-* Exploratory visualization
+### Phase 2 — Exploratory Data Analysis
 
-### Phase 3 — Robust Statistical Modeling
+* Distribution analysis of pollutants
+* Correlation structure examination
+* Outlier visualization using boxplots
+* Temporal trend analysis (RSPM over time)
 
-To reduce sensitivity to extreme observations, robust statistical techniques were applied:
+---
 
-* Median estimation
+### Phase 3 — Robust Statistical Analysis
+
+To reduce sensitivity to extreme observations:
+
+* Median-based central tendency
 * Median Absolute Deviation (MAD)
-* Robust Z-Score Analysis
+* Robust Z-score computation
+
+This approach provides more stable inference under heavy-tailed distributions.
+
+---
 
 ### Phase 4 — Multivariate Anomaly Detection
 
-An Isolation Forest algorithm was implemented to identify observations exhibiting unusual multivariate pollutant behavior.
+An **Isolation Forest** model was applied for multivariate anomaly detection.
 
-### Phase 5 — Environmental Risk Assessment
+* Contamination parameter: **1%**
+* Uses decision function scoring
+* Captures nonlinear multivariate relationships
 
-Anomaly scores were transformed into interpretable environmental risk categories:
+> Lower anomaly scores indicate more unusual observations.
+
+---
+
+### Phase 5 — Environmental Risk Categorization
+
+Anomaly scores were converted into interpretable risk categories using quantile-based discretization:
 
 * High Risk
 * Moderate Risk
@@ -95,13 +112,19 @@ Anomaly scores were transformed into interpretable environmental risk categories
 
 # Key Findings
 
-## 1. Distributional Characteristics
+---
+
+## 1. Pollutant Distribution Behavior
 
 ![Pollutant Distributions](images/pollutant_distribution.png)
 
-Exploratory analysis revealed strongly skewed pollutant distributions with substantial evidence of heavy-tailed behavior and extreme observations.
+Pollutants exhibit:
 
-The observed distributional structure suggests that traditional mean-based methods may be insufficient for characterizing pollution dynamics and motivates the use of robust statistical techniques.
+* Strong right-skewed distributions
+* Heavy-tailed behavior
+* Presence of extreme values
+
+These characteristics motivate the use of robust statistical techniques rather than mean-based inference.
 
 ---
 
@@ -109,15 +132,15 @@ The observed distributional structure suggests that traditional mean-based metho
 
 ![Correlation Heatmap](images/correlation_heatmap.png)
 
-Moderate positive relationships were observed among several pollutants.
+Moderate positive relationships exist among pollutants:
 
 | Variable Pair | Correlation |
 | ------------- | ----------: |
-| SO₂ and NO₂   |       0.423 |
-| NO₂ and RSPM  |       0.403 |
-| RSPM and SPM  |       0.480 |
+| SO₂ – NO₂     |       0.423 |
+| NO₂ – RSPM    |       0.403 |
+| RSPM – SPM    |       0.480 |
 
-These relationships indicate meaningful multivariate dependence structures and justify the application of multivariate anomaly detection methods.
+These dependencies justify multivariate anomaly detection methods.
 
 ---
 
@@ -125,27 +148,25 @@ These relationships indicate meaningful multivariate dependence structures and j
 
 ![Robust Anomaly Counts](images/robust_anomaly_counts.png)
 
-Robust Z-Score analysis identified substantial numbers of extreme observations.
+Robust Z-score analysis identified extreme observations:
 
-| Pollutant | Detected Anomalies |
-| --------- | -----------------: |
-| SO₂       |                746 |
-| NO₂       |                196 |
-| RSPM      |                106 |
-| SPM       |                 77 |
+| Pollutant | Anomalies |
+| --------- | --------: |
+| SO₂       |       746 |
+| NO₂       |       196 |
+| RSPM      |       106 |
+| SPM       |        77 |
 
-SO₂ exhibited the highest concentration of anomalous observations, suggesting greater variability and heavier-tailed behavior relative to the remaining pollutants.
+### Summary Statistics
 
-### Mean vs Median Comparison
-
-| Variable |   Mean | Median |
-| -------- | -----: | -----: |
-| SO₂      |   7.73 |   5.50 |
-| NO₂      |  27.33 |  29.00 |
-| RSPM     |  83.17 |  84.00 |
+| Variable | Mean   | Median |
+| -------- | ------ | ------ |
+| SO₂      | 7.73   | 5.50   |
+| NO₂      | 27.33  | 29.00  |
+| RSPM     | 83.17  | 84.00  |
 | SPM      | 197.30 | 181.00 |
 
-The differences between means and medians provide additional evidence of skewed distributions and outlier influence.
+Large mean–median gaps confirm skewness and outlier influence.
 
 ---
 
@@ -153,71 +174,80 @@ The differences between means and medians provide additional evidence of skewed 
 
 ![Multivariate Anomaly Detection](images/multivariate_anomaly_visualization.png)
 
-Isolation Forest identified:
+Isolation Forest results (final evaluation):
 
-| Classification         | Count |
-| ---------------------- | ----: |
-| Normal Observations    | 9,109 |
-| Anomalous Observations |    93 |
+| Classification         |  Count |
+| ---------------------- | -----: |
+| Normal Observations    | 27,789 |
+| Anomalous Observations |    281 |
 
-Approximately 1% of analyzed observations were classified as anomalous.
+Approximately 1% of observations were classified as anomalies.
 
-The detected anomalies exhibited unusual pollutant combinations and elevated particulate concentrations that differed substantially from dominant environmental patterns.
-
-Unlike univariate approaches, Isolation Forest simultaneously evaluates multiple pollutant measurements, enabling the detection of complex environmental anomalies.
+Unlike univariate methods, this model captures **joint abnormal behavior across multiple pollutants**.
 
 ---
 
-## 5. Environmental Risk Assessment
+## 5. Environmental Risk Categorization
 
 ![Risk Category Distribution](images/risk_category_distribution.png)
 
-Anomaly scores were converted into interpretable environmental risk categories.
+Risk categories were generated using quantile binning:
 
-| Risk Level    |  Count |
-| ------------- | -----: |
-| High Risk     | 21,340 |
-| Moderate Risk | 21,340 |
-| Low Risk      | 21,340 |
+| Risk Level    |   Count |
+| ------------- | ------: |
+| High Risk     | ~21,340 |
+| Moderate Risk | ~21,340 |
+| Low Risk      | ~21,340 |
 
-The resulting framework provides a practical mechanism for environmental monitoring, anomaly prioritization, and risk communication.
+> Risk groups are equal-frequency bins derived from anomaly score distribution, not absolute severity thresholds.
 
 ---
 
-## Research Question Answered
+## Research Insight
 
-The results demonstrate that robust statistical techniques and multivariate anomaly detection methods can successfully identify unusual environmental pollution events within large-scale monitoring datasets.
+The results demonstrate that:
 
-Robust statistical analysis revealed significant heavy-tailed behavior and extreme observations, particularly for sulfur dioxide (SO₂), where 746 anomalies were detected using robust z-score methods.
-
-Furthermore, the multivariate Isolation Forest framework identified 93 anomalous observations exhibiting unusual pollutant combinations that would likely remain undetected using traditional univariate approaches.
-
-These findings support the effectiveness of computational statistics and machine learning techniques for environmental surveillance, anomaly detection, and decision-support applications.
+* Robust statistical methods successfully identify extreme pollutant behavior
+* Multivariate models detect anomalies missed by univariate approaches
+* Isolation Forest effectively captures nonlinear environmental interactions
+* Air quality data exhibits strong skewness and heavy-tailed structure
 
 ---
 
 ## Practical Implications
 
-The developed framework can support:
+This framework can support:
 
 * Environmental monitoring systems
-* Pollution surveillance programs
-* Environmental risk assessment
-* Regulatory compliance investigations
-* Public health monitoring initiatives
-* Data-driven environmental policy development
-
-By identifying unusual pollution events early, environmental stakeholders can prioritize investigations and allocate monitoring resources more effectively.
+* Air quality surveillance programs
+* Public health risk assessment
+* Regulatory compliance tracking
+* Early warning systems for pollution spikes
 
 ---
 
 ## Project Dashboard
 
-The dashboard below summarizes the primary outputs of the anomaly detection framework.
-
 ![Project Dashboard](images/project_dashboard.png)
 
-The dashboard integrates correlation analysis, anomaly detection, environmental risk categorization, and multivariate pollutant relationships into a unified reporting interface.
+The dashboard integrates:
+
+* Risk categorization
+* Anomaly detection results
+* Correlation structure
+* Multivariate scatter analysis
+
+It provides a unified statistical summary of environmental conditions.
+
+---
+
+## Limitations
+
+* PM2.5 excluded due to excessive missing values
+* Median imputation may reduce sensitivity to extreme events
+* Isolation Forest results depend on contamination parameter selection
+* Temporal dependency modeling was not explicitly performed
+* Spatial variability across monitoring stations was not modeled
 
 ---
 
@@ -229,35 +259,32 @@ The dashboard integrates correlation analysis, anomaly detection, environmental 
 * SciPy
 * Matplotlib
 * Seaborn
-* Scikit-Learn
+* Scikit-learn
 * Jupyter Notebook
 
 ---
 
-## Statistical Techniques Demonstrated
+## Statistical Techniques
 
-* Exploratory Data Analysis
+* Exploratory Data Analysis (EDA)
 * Correlation Analysis
-* Robust Statistics
-* Median Absolute Deviation (MAD)
-* Robust Z-Score Analysis
-* Multivariate Statistical Analysis
-* Isolation Forest Anomaly Detection
-* Environmental Risk Categorization
-* Decision Support Analytics
+* Robust Statistics (MAD, median-based inference)
+* Robust Z-score Analysis
+* Multivariate Anomaly Detection
+* Isolation Forest
+* Quantile-based Risk Modeling
 
 ---
 
 ## Skills Demonstrated
 
 * Computational Statistics
-* High-Dimensional Statistical Modeling
-* Robust Statistical Methods
 * Statistical Learning
-* Environmental Data Analytics
-* Machine Learning
-* Scientific Reporting
+* Robust Data Analysis
+* Environmental Data Science
+* Machine Learning (Unsupervised Learning)
 * Data Visualization
+* Risk Modeling
 
 ---
 
@@ -283,24 +310,24 @@ statistical-anomaly-detection-system/
 
 ---
 
-## Future Enhancements
+## Future Work
 
-* Bayesian Anomaly Detection
-* Real-Time Monitoring Systems
-* Spatial Statistical Modeling
-* Extreme Value Analysis
-* Interactive Dashboard Deployment
-* Streaming Environmental Data Integration
+* Bayesian anomaly detection models
+* Real-time environmental monitoring pipeline
+* Spatial statistical modeling of pollution
+* Extreme value theory (EVT) integration
+* Streaming data anomaly detection systems
+* Interactive dashboard deployment (Plotly/Dash or Streamlit)
 
 ---
 
 ## References
 
-1. Hastie, Tibshirani, & Friedman. *The Elements of Statistical Learning*.
-2. James, Witten, Hastie, & Tibshirani. *An Introduction to Statistical Learning*.
-3. Huber, P. J. *Robust Statistics*.
-4. Scikit-Learn Documentation.
-5. Air Quality Data in India Dataset.
+1. Hastie, Tibshirani, Friedman — *The Elements of Statistical Learning*
+2. James et al. — *An Introduction to Statistical Learning*
+3. Huber, P.J. — *Robust Statistics*
+4. Scikit-learn Documentation
+5. Air Quality Data in India Dataset
 
 ---
 
@@ -308,4 +335,4 @@ statistical-anomaly-detection-system/
 
 **Clement Kofi Okyere Biew**
 
-Statistics | Data Science | Computational Statistics | Statistical Learning | Machine Learning | Quantitative Research
+Computational Statistics | Data Science | Statistical Learning | Machine Learning | Environmental Analytics
