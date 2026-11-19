@@ -61,7 +61,7 @@ The project uses the **Air Quality Data in India** dataset, which contains histo
 
 ## Methodology
 
-### Phase 1 — Data Collection and Preprocessing
+### Phase 1 - Data Collection and Preprocessing
 
 The original dataset was loaded and examined to understand its structure, variable types, and data quality.
 
@@ -75,7 +75,7 @@ Key procedures included:
 
 Median imputation was used to reduce the influence of extreme observations on the imputation values.
 
-### Phase 2 — Exploratory Data Analysis
+### Phase 2 - Exploratory Data Analysis
 
 Exploratory analysis was conducted to examine the distributional and relational characteristics of the selected pollutants.
 
@@ -89,7 +89,7 @@ The analysis included:
 
 The correlation analysis provided an initial assessment of the relationships among pollutant measurements and helped motivate the use of multivariate analytical methods.
 
-### Phase 3 — Robust Statistical Analysis
+### Phase 3 - Robust Statistical Analysis
 
 Robust statistical techniques were applied to examine the influence of extreme observations and characterize pollutant variability.
 
@@ -114,7 +114,7 @@ An observation was flagged as an extreme value when:
 
 This procedure was applied separately to each pollutant variable.
 
-### Phase 4 — Multivariate Anomaly Detection
+### Phase 4 - Multivariate Anomaly Detection
 
 Isolation Forest was implemented using Scikit-learn to examine unusual combinations of pollutant measurements.
 
@@ -131,7 +131,7 @@ In the Scikit-learn implementation, observations classified as `-1` are identifi
 
 The decision function provides a relative measure of how unusual an observation is: lower scores indicate more anomalous observations.
 
-### Phase 5 — Relative Anomaly-Score Categorization
+### Phase 5 - Relative Anomaly-Score Categorization
 
 The anomaly scores were divided into three approximately equal-frequency groups using quantile-based discretization (`pandas.qcut`).
 
@@ -145,7 +145,7 @@ These labels represent relative positions in the anomaly-score distribution. The
 
 The categorized observations were used to generate summary outputs and visualizations for further investigation.
 
-### Phase 6 — Visualization and Dashboard Development
+### Phase 6 - Visualization and Dashboard Development
 
 A consolidated dashboard was developed to communicate the principal analytical outputs.
 
