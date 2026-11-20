@@ -99,20 +99,21 @@ The analysis compared:
 - Standard deviation and Median Absolute Deviation (MAD).
 - Classical and robust measures of dispersion.
 
-Robust Z-scores were calculated using:
+### Robust Z-Score Analysis
 
-\[
-Z_{\text{robust}} =
-\frac{0.6745(x-\text{Median})}{MAD}
-\]
+Robust Z-scores were calculated separately for each pollutant using the median and Median Absolute Deviation (MAD).
+
+**Formula:**
+
+`Robust Z-score = 0.6745 × (Observation − Median) / MAD`
 
 An observation was flagged as an extreme value when:
 
-\[
-|Z_{\text{robust}}| > 3.5
-\]
+`|Robust Z-score| > 3.5`
 
-This procedure was applied separately to each pollutant variable.
+This approach identifies unusually high or low pollutant observations using robust measures of central tendency and dispersion.
+
+
 
 ### Phase 4 - Multivariate Anomaly Detection
 
